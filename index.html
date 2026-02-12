@@ -3,45 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Proposal</title>
+    <title>Valentine's Day Proposal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8d5d5;
-            color: #333;
+            background-color: #f8e1f4;
+            color: #5f3c69;
             text-align: center;
-            padding: 50px;
+            overflow: hidden;
         }
-        h1 {
-            color: #e63946;
+        .screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: opacity 1s ease;
         }
-        .heart {
-            color: #fc2e64;
-            font-size: 80px;
+        .screen.active {
+            display: block;
+            opacity: 1;
         }
-        button {
-            background-color: #e63946;
+        h1, h2 {
+            margin: 20px;
+        }
+        #propose {
+            display: none;
+        }
+        .button {
+            padding: 15px 30px;
+            background-color: #ff7f50;
             color: white;
             border: none;
-            padding: 15px 25px;
+            border-radius: 5px;
             font-size: 20px;
             cursor: pointer;
-            border-radius: 5px;
         }
-        button:hover {
-            background-color: #d62839;
+        .fade {
+            animation: fadeIn 2s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <h1>Happy Valentine's Day, Sarah!</h1>
-    <div class="heart">❤️</div>
-    <p>Will you be my Valentine?</p>
-    <button onclick="showProposal()">Click to see proposal</button>
-
+    <div id="screen1" class="screen active fade">
+        <h1>Once Upon a Time...</h1>
+        <p>In a land filled with love, there was a boy who met a girl named Sarah...</p>
+        <button class="button" onclick="nextScreen(2)">Begin the Adventure</button>
+    </div>
+    <div id="screen2" class="screen fade">
+        <h2>The First Encounter</h2>
+        <p>It was a sunny day when they first locked eyes. The world around them faded away...</p>
+        <button class="button" onclick="nextScreen(3)">Continue</button>
+    </div>
+    <div id="screen3" class="screen fade">
+        <h2>Moments of Joy</h2>
+        <p>They shared laughter and dreams under the stars, creating a bond unbreakable...</p>
+        <button class="button" onclick="nextScreen(4)">Next Chapter</button>
+    </div>
+    <div id="screen4" class="screen fade">
+        <h2>The Proposal</h2>
+        <p>Tonight, under the moonlight, he plans to ask Sarah to be his forever...</p>
+        <button class="button" onclick="revealProposal()">Pop the Question!</button>
+    </div>
+    <div id="propose" class="screen fade">
+        <h1>Sarah...</h1>
+        <h2>Will you marry me?</h2>
+        <button class="button" onclick="restart()">Restart the Story</button>
+    </div>
     <script>
-        function showProposal() {
-            alert("Sarah, I love you! Will you marry me?");
+        let currentScreen = 1;
+        function nextScreen(screen) {
+            document.getElementById(`screen${currentScreen}`).classList.remove('active');
+            document.getElementById(`screen${screen}`).classList.add('active');
+            currentScreen = screen;
+        }
+        function revealProposal() {
+            document.getElementById(`screen4`).classList.remove('active');
+            document.getElementById(`propose`).classList.add('active');
+        }
+        function restart() {
+            currentScreen = 1;
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(`screen1`).classList.add('active');
         }
     </script>
 </body>
